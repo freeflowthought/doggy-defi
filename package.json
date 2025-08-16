@@ -1,0 +1,25 @@
+{
+  "name": "doggy-defi",
+  "version": "1.0.0",
+  "description": "A smart contract system for handling USDC payments with event verification using transient storage, designed for EIP-7702 batched transactions. BeaconPay introduces a sponsored transactions feature, allowing dApps and merchants to cover gas fees for their users.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeflowthought/doggy-defi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/freeflowthought/doggy-defi/issues"
+  },
+  "homepage": "https://github.com/freeflowthought/doggy-defi#readme"
+}
