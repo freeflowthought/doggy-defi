@@ -22,7 +22,7 @@ contract DeployEventor is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // Deploy Eventor contract
-        Eventor eventor = new Eventor(USDC_FLOW);
+        Eventor eventor = new Eventor(USDC_FLOW, vm.addr(deployerPrivateKey));
 
         console.log("Eventor deployed at:", address(eventor));
 

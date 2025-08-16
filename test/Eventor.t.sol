@@ -37,7 +37,7 @@ contract PaymentExecutor {
         IERC20(USDC).transfer(recipient, usdcAmount);
 
         // Second call to execute - validates and emits event
-        Paymaster(paymaster).sponsoredReveal(recipient, usdcAmount, paymentId);
+        Paymaster(payable(paymaster)).sponsoredReveal(recipient, usdcAmount, paymentId);
     }
 }
 
