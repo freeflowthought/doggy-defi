@@ -11,7 +11,7 @@ contract Paymaster {
     }
 
     function sponsoredReveal(address _to, uint256 _declaredAmount, string memory _paymentId) external {
-        eventor.sponsoredReveal(_to, _declaredAmount, _paymentId);
+        eventor.sponsoredReveal(_paymentId);
     }
 
     receive() external payable {}

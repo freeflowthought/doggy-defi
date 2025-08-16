@@ -36,11 +36,15 @@ contract Eventor is EventorHarness {
         super.commit(_to, _declaredAmount, _paymentId);
     }
 
-    function reveal(address _to, uint256 _declaredAmount, string memory _paymentId) public override onlyEOA {
-        super.reveal(_to, _declaredAmount, _paymentId);
+    function reveal(string memory _paymentId) public override onlyEOA {
+        super.reveal(_paymentId);
     }
 
-    function sponsoredReveal(address _to, uint256 _declaredAmount, string memory _paymentId) public override onlyPaymaster {
-        super.reveal(_to, _declaredAmount, _paymentId);
+    function sponsoredReveal(string memory _paymentId) public override onlyPaymaster {
+        super.reveal(_paymentId);
+    }
+
+    function reclaim(string memory _paymentId) public override onlyEOA {
+        super.reclaim(_paymentId);
     }
 }
