@@ -59,12 +59,41 @@ contract EventorTest is Test {
 
         eventor.commit(RECIPIENT, PAYMENT_AMOUNT, PAYMENT_ID);
 
+        // Verify commitment exists before reclaim
+        bytes32 commitmentHash = keccak256(abi.encodePacked(PAYMENT_ID));
+        (address to, uint256 declaredAmount, uint256 balanceBefore, uint256 createdAt, bool revealed) = eventor.commitments(commitmentHash);
+        assertTrue(createdAt > 0, "Commitment should exist before reclaim");
+
         // Warp time to after the timeout
         vm.warp(block.timestamp + eventor.TIMEOUT() + 1);
 
         vm.expectEmit(true, true, false, true);
         emit IEventor.Reclaimed(keccak256(abi.encodePacked(PAYMENT_ID)), RECIPIENT);
 
+        eventor.reclaim(PAYMENT_ID);
+
+        // Verify commitment is deleted after reclaim
+        (to, declaredAmount, balanceBefore, createdAt, revealed) = eventor.commitments(commitmentHash);
+        assertEq(createdAt, 0, "Commitment should be deleted after reclaim");
+        assertEq(to, address(0), "Commitment.to should be zero after reclaim");
+        assertEq(declaredAmount, 0, "Commitment.declaredAmount should be zero after reclaim");
+
+        vm.stopPrank();
+    }
+
+    function test_reclaim_twice_fails() public {
+        vm.startPrank(USDC_HOLDER, USDC_HOLDER);
+
+        eventor.commit(RECIPIENT, PAYMENT_AMOUNT, PAYMENT_ID);
+
+        // Warp time to after the timeout
+        vm.warp(block.timestamp + eventor.TIMEOUT() + 1);
+
+        // First reclaim should succeed
+        eventor.reclaim(PAYMENT_ID);
+
+        // Second reclaim should fail because commitment no longer exists
+        vm.expectRevert(IEventor.NotCommitted.selector);
         eventor.reclaim(PAYMENT_ID);
 
         vm.stopPrank();

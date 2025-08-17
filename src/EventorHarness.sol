@@ -87,5 +87,8 @@ contract EventorHarness is IEventor, ReentrancyGuardUpgradeable {
         }
 
         emit Reclaimed(commitmentHash, commitment.to);
+        
+        // Clear the commitment from storage to prevent re-reclaim and save gas
+        delete commitments[commitmentHash];
     }
 }
