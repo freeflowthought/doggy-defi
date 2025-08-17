@@ -68,7 +68,10 @@ contract EventorHarness is IEventor, ReentrancyGuardUpgradeable {
     function sponsoredReveal(string memory _paymentId) public virtual {
         reveal(_paymentId);
     }
+    
 
+    /// @notice Allows the original committer to "reclaim" a payment commitment if it has expired and has not been revealed. This function is used to clear out expired commitments from the system.
+    /// @param _paymentId The unique identifier of the payment commitment to be reclaimed.
     function reclaim(string memory _paymentId) public virtual nonReentrant {
         bytes32 commitmentHash = keccak256(abi.encodePacked(_paymentId));
         Commitment storage commitment = commitments[commitmentHash];
