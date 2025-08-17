@@ -2,11 +2,19 @@
 
 A smart contract system for handling USDC payments with event verification using transient storage, designed for EIP-7702 batched transactions. BeaconPay introduces a sponsored transactions feature, allowing dApps and merchants to cover gas fees for their users.
 
+## Mission
+
+To revolutionize decentralized finance by providing dApps and merchants with an unbreakable, ultra-efficient, and user-centric payment infrastructure that eliminates blockchain barriers, enabling frictionless adoption and empowering billions to transact securely without technical hurdles.
+
+## Future Vision
+
+To pioneer the ultimate on-chain payment ecosystem, dominating as the universal standard for seamless, instantaneous digital transactions across all major blockchain networks, bridging traditional finance with cutting-edge DeFi through intuitive on/off-ramps, and unlocking innovative capabilities like AI-driven intent-based payments, automated bulk cross-chain settlements, and global scalability for a truly borderless economy.
+
 ## Overview
 
 This project consists of:
 
-- **Eventor**: A contract that validates and emits payment events using transient storage.
+- **Eventor**: A contract that validates and emits payment events using transient storage, implementing a commit-reveal pattern for payment verification.
 - **Paymaster**: A contract that enables sponsored transactions, allowing a third party to pay for gas fees.
 - **EventorHarness**: A test version of Eventor without EOA restrictions.
 - **Test Suite**: Comprehensive tests with mainnet forking.
@@ -15,11 +23,12 @@ This project consists of:
 
 - ✅ **Sponsored Transactions**: dApps and merchants can cover gas fees for their users, enabling a seamless payment experience.
 - ✅ **EIP-7702 Compatible**: Designed for EIP-7702 use cases with batched transactions.
-- ✅ **Transient Storage**: Uses Solidity's transient storage for gas-efficient state management.
 - ✅ **Multi-Chain Support**: Deployable on Ethereum, Zircuit, and Flow networks.
 - ✅ **Payment Validation**: Validates USDC transfers with a commit-reveal pattern.
 - ✅ **Event Emission**: Emits confirmed payment events after validation.
-- ✅ **EOA Only**: Restricted to externally owned accounts for security.
+- ✅ **Paymaster**: A contract that enables sponsored transactions, allowing a third party to pay for gas fees.
+
+
 
 ## BeaconPay: Sponsored Transactions
 
@@ -48,6 +57,8 @@ The main contract that handles payment validation and event emission using a com
 ### Paymaster
 
 The `Paymaster` contract is responsible for executing sponsored transactions. It has a `sponsoredReveal` function that can only be called by the registered paymaster address in the `Eventor` contract.
+
+
 
 ## Supported Networks
 
@@ -120,13 +131,6 @@ Deploy the `Eventor` and `Paymaster` contracts, and then set the paymaster addre
 │   └── README.md            # Deployment instructions
 └── lib/                     # Dependencies
 ```
-
-## Security Considerations
-
-- The `Eventor` contract only accepts `commit` and `reveal` calls from EOAs (`tx.origin == msg.sender`).
-- The `sponsoredReveal` function can only be called by the registered `paymaster` address.
-- Uses transient storage to prevent cross-transaction state pollution.
-- Validates payment amounts and recipients before event emission.
 
 ## License
 
